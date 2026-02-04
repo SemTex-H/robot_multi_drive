@@ -16,6 +16,8 @@ Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
 uint16_t servo_positions[6] = {1500, 1500, 1500, 1500, 1100, 1500};
 const uint8_t servo_channels[6] = {1, 2, 3, 4, 5, 6};
 const int double_click_interval = 500;
+bool pressed_once = false;
+unsigned long last_press_time = 0;
 
 // ========= PACKET STRUCTURE =========
 // Using #pragma pack to ensure 1:1 mapping with the serial buffer
@@ -67,7 +69,7 @@ void setMotorSpeed(uint8_t motor, uint16_t speed) {
 void initial_pos() {
     for(int i=0; i<6; i++) {
         servo_positions[i] = SERVO_INIT_VAL;
-        if(i==3) pwm.setPWM(4, 0, usToTicks(1800));
+        if(i==3) pwm.setPWM(4, 0, usToTicks(2000));
         else pwm.setPWM(servo_channels[i], 0, usToTicks(SERVO_INIT_VAL));
     }
     Serial.println("Servos Reset to Center");
@@ -95,6 +97,7 @@ void data_handler(RobotPacket *p) {
       pwm.setPWM(servo_channels[s_idx], 0, usToTicks(servo_positions[s_idx]));
     }
 
+
     // 2. Handle Gripper (Binary Open/Close) - data[4] (joy_R)
     if (p->data[4] == 2)      servo_positions[5] = 2000; // Close
     else if (p->data[4] == 1) servo_positions[5] = 1000; // Open
@@ -113,7 +116,7 @@ void data_handler(RobotPacket *p) {
         case 0x05: Serial.println("<-");             setMotorSpeed(0, 255); setMotorSpeed(1, 255); break;
         case 0x06: Serial.println("Backward: | ||"); setMotorSpeed(0, 456); setMotorSpeed(1, 255); break;
         case 0x07: Serial.println("Backward");       setMotorSpeed(0, 511); setMotorSpeed(1, 255); break;
-        case 0x08: Serial.println("Backward: || |"); setMotorSpeed(0, 511); setMotorSpeed(1, 200);   break;
+        case 0x08: Serial.println("Backward: || |"); setMotorSpeed(0, 511); setMotorSpeed(1, 200); break;
         default: break;
     }
 }
