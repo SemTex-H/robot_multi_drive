@@ -13,7 +13,7 @@ const uint8_t PWM_B = 5,  BIN_1 = 16, BIN_2 = 17; // Motor B
 
 // ========= GLOBALS =========
 Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
-uint16_t servo_positions[6] = {1500, 1500, 1500, 1500, 1500, 1500};
+uint16_t servo_positions[6] = {1500, 1500, 1500, 1500, 1100, 1500};
 const uint8_t servo_channels[6] = {1, 2, 3, 4, 5, 6};
 
 // ========= PACKET STRUCTURE =========
@@ -66,7 +66,8 @@ void setMotorSpeed(uint8_t motor, uint16_t speed) {
 void initial_pos() {
     for(int i=0; i<6; i++) {
         servo_positions[i] = SERVO_INIT_VAL;
-        pwm.setPWM(servo_channels[i], 0, usToTicks(SERVO_INIT_VAL));
+        if(i==3) pwm.setPWM(4, 0, usToTicks(1800));
+        else pwm.setPWM(servo_channels[i], 0, usToTicks(SERVO_INIT_VAL));
     }
     Serial.println("Servos Reset to Center");
 }
