@@ -20,7 +20,6 @@ bool pressed_once = false;
 unsigned long last_press_time = 0;
 
 // ========= PACKET STRUCTURE =========
-// Using #pragma pack to ensure 1:1 mapping with the serial buffer
 #pragma pack(push, 1)
 typedef struct {
     uint8_t head0;    // 0xDE (222)
