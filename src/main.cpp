@@ -107,12 +107,12 @@ void data_handler(RobotPacket *p) {
 
     // 4. DC Motors - data[6] (command)
     switch (p->data[6]) {
-        case 0x00: Serial.println("Forward: || |");  setMotorSpeed(0, 200); setMotorSpeed(1, 511); break;
+        case 0x00: Serial.println("Forward: || |");  setMotorSpeed(0, 255); setMotorSpeed(1, 456); break;
         case 0x01: Serial.println("Forward");        setMotorSpeed(0, 255); setMotorSpeed(1, 511); break;
-        case 0x02: Serial.println("Forward: | ||");  setMotorSpeed(0, 456); setMotorSpeed(1, 511); break;
-        case 0x03: Serial.println("->");             setMotorSpeed(0, 511); setMotorSpeed(1, 511); break;
+        case 0x02: Serial.println("Forward: | ||");  setMotorSpeed(0, 200); setMotorSpeed(1, 511); break;
+        case 0x03: Serial.println("->");             setMotorSpeed(0, 255); setMotorSpeed(1, 255); break;
         case 0x04: Serial.println("Stop");           setMotorSpeed(0, 0);   setMotorSpeed(1, 0);   break;
-        case 0x05: Serial.println("<-");             setMotorSpeed(0, 255); setMotorSpeed(1, 255); break;
+        case 0x05: Serial.println("<-");             setMotorSpeed(0, 511); setMotorSpeed(1, 511); break;
         case 0x06: Serial.println("Backward: | ||"); setMotorSpeed(0, 456); setMotorSpeed(1, 255); break;
         case 0x07: Serial.println("Backward");       setMotorSpeed(0, 511); setMotorSpeed(1, 255); break;
         case 0x08: Serial.println("Backward: || |"); setMotorSpeed(0, 511); setMotorSpeed(1, 200); break;
