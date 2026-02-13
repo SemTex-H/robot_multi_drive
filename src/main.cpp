@@ -99,7 +99,7 @@ void data_handler(RobotPacket *p) {
 
     // 2. Handle Gripper (Binary Open/Close) - data[4] (joy_R)
     if (p->data[4] == 2)      servo_positions[5] = 2000; // Close
-    else if (p->data[4] == 1) servo_positions[5] = 1000; // Open
+    else if (p->data[4] == 1) servo_positions[5] = 1500; // Open
     pwm.setPWM(servo_channels[5], 0, usToTicks(servo_positions[5]));
 
     // 3. Reset Button - data[5] (joy_H)
